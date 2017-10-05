@@ -1,11 +1,4 @@
-// import React from "react";
-// import ReactDOM from "react-dom";
-'use stritc';
-// class TemporalComponent extends React.Component {
-//   render() {
-//     return <div>Hello {new Date().toLocaleTimeString()}</div>; //retorna un Hello y  la fecha
-//   }
-// }
+"use strict";
 
 class Timer extends React.Component {
   constructor(props) {
@@ -16,30 +9,22 @@ class Timer extends React.Component {
   }
   render() {
     const start = e => {
-      if(e.target.textContent=="start"){
-        e.target.textContent="stop"
+      if (e.target.textContent == "start") {
+        e.target.textContent = "stop";
         this.startTimer();
+      } else {
+        e.target.textContent = "start";
+        this.stopTimer();
       }
-      else{
-      e.target.textContent="start"
-      this.stopTimer();
-    }
     };
     const reset = e => {
       this.resetTimer();
     };
     return (
       <div className="stopwatch-time">
-    
+        <p> {this.state.date}</p>
         <button onClick={start}> start </button>
         <button onClick={reset}> reset </button>
-
-        <p> {this.state.date}</p>
-
-        {/* <span>
-          {" "}
-          <TemporalComponent />{" "}
-        </span> */}
       </div>
     );
   }
@@ -52,7 +37,7 @@ class Timer extends React.Component {
   startTimer() {
     this.timer = setInterval(() => {
       this.setState({
-        date: this.state.date+1
+        date: this.state.date + 1
       });
     }, 1000);
   }
@@ -62,8 +47,6 @@ class Timer extends React.Component {
   }
 }
 
-// ReactDOM.render(< Timer title = "Timer"/>,
-// document.getElementById("root"));
 class Model {
   constructor(index, num) {
     this.players = [
@@ -128,19 +111,19 @@ const Header = ({ model }) => {
     <div>
       <header className=" header">
         <div className="stats">
-          <div>PLAYERS: {model.players.length}</div>
+          <div> <h2>PLAYERS:</h2> {model.players.length}</div>
           <div>TOTALPOINTS: {model.sumScore()}</div>
         </div>
         <div className="stopwatch ">
-        <h2>STOPWATCH</h2>
-      <Timer />
+          <h2>STOPWATCH</h2>
+          <Timer/>
         </div>
       </header>
     </div>
   );
 };
 
-function moostra() {
+function playersButtons() {
   return model.players.map((a, b) => {
     return (
       <div key={b}>
@@ -170,7 +153,7 @@ function moostra() {
   });
 }
 const PlayerList = ({ model }) => {
-  return <div>{moostra()}</div>;
+  return <div>{playersButtons()}</div>;
 };
 
 const PlayerForm = ({ model }) => {
