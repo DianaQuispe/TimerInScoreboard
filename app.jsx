@@ -1,48 +1,58 @@
 // import React from "react";
 // import ReactDOM from "react-dom";
 'use stritc';
-class TemporalComponent extends React.Component {
-  render() {
-    return <div>Hello {new Date().toLocaleTimeString()}</div>; //retorna un Hello y  la fecha
-  }
-}
+// class TemporalComponent extends React.Component {
+//   render() {
+//     return <div>Hello {new Date().toLocaleTimeString()}</div>; //retorna un Hello y  la fecha
+//   }
+// }
 
 class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: new Date()
+      date: 0
     };
   }
   render() {
-    const { title } = this.props;
     const start = e => {
-      this.startTimer();
-    };
-    const stop = e => {
+      if(e.target.textContent=="start"){
+        e.target.textContent="stop"
+        this.startTimer();
+      }
+      else{
+      e.target.textContent="start"
       this.stopTimer();
+    }
+    };
+    const reset = e => {
+      this.resetTimer();
     };
     return (
-      <div>
-        <h2> {title} </h2>
-
+      <div className="stopwatch-time">
+    
         <button onClick={start}> start </button>
-        <button onClick={stop}> stop </button>
+        <button onClick={reset}> reset </button>
 
-        <p> {this.state.date.toLocaleTimeString()}</p>
+        <p> {this.state.date}</p>
 
-        <span>
+        {/* <span>
           {" "}
           <TemporalComponent />{" "}
-        </span>
+        </span> */}
       </div>
     );
   }
   // componentDidMount
+  resetTimer() {
+    this.setState({
+      date: 0
+    });
+  }
   startTimer() {
     this.timer = setInterval(() => {
       this.setState({
-        date: new Date()
+        date: this.state.date+1
       });
     }, 1000);
   }
@@ -122,10 +132,8 @@ const Header = ({ model }) => {
           <div>TOTALPOINTS: {model.sumScore()}</div>
         </div>
         <div className="stopwatch ">
-          <h2>STOPWATCH</h2>
-          <div className="stopwatch-time">0</div>
-          <button>START</button>
-          <button>RESET</button>
+        <h2>STOPWATCH</h2>
+      <Timer />
         </div>
       </header>
     </div>
@@ -192,7 +200,6 @@ const Application = ({ title, model }) => {
       <Header model={model} />
       <PlayerList model={model} />
       <PlayerForm model={model} />
-      <Timer title="Timer" />
     </div>
   );
 };
